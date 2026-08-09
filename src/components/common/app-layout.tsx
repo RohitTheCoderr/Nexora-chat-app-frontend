@@ -14,15 +14,16 @@ import { Link, useLocation } from "react-router-dom";
 import { NexoraLogo, NexoraMark } from "./logo-setup.tsx";
 import { Button } from "../ui/button.tsx";
 import { cn } from "@/lib/utils.ts";
+
+import { currentUser, UserAvatar } from "./user-avatar.tsx";
+import { Input } from "../ui/input.tsx";
+import { ThemeToggle } from "./theme-toggle.tsx";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip.tsx";
-import { currentUser, UserAvatar } from "./user-avatar.tsx";
-import { Input } from "../ui/input.tsx";
-import { ThemeToggle } from "./theme-toggle.tsx";
 
 const nav: { to: string; label: string; icon: typeof Users; badge?: number }[] =
   [
@@ -55,10 +56,10 @@ export function AppLayout({
         <aside
           className={cn(
             "hidden shrink-0 flex-col border-r border-sidebar-border bg-sidebar transition-[width] duration-200 md:flex",
-            collapsed ? "w-[76px]" : "w-[248px]",
+            collapsed ? "w-[80px]" : "w-[248px]",
           )}
         >
-          <div className="flex h-16 items-center justify-between gap-2 px-4">
+          <div className="flex h-16 items-center justify-between gap-1 px-2">
             {collapsed ? (
               <NexoraMark className="h-9 w-9" />
             ) : (
@@ -67,7 +68,7 @@ export function AppLayout({
             <Button
               variant="ghost"
               size="icon"
-              className="h-8 w-8 shrink-0"
+              className="h-8 w-8 shrink-0 cursor-pointer z-10"
               onClick={() => setCollapsed((c) => !c)}
               aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
             >
@@ -110,7 +111,7 @@ export function AppLayout({
               );
               return collapsed ? (
                 <Tooltip key={item.to}>
-                  <TooltipTrigger>{link}</TooltipTrigger>
+                  <TooltipTrigger asChild>{link}</TooltipTrigger>
                   <TooltipContent side="right">{item.label}</TooltipContent>
                 </Tooltip>
               ) : (
@@ -143,7 +144,7 @@ export function AppLayout({
                     variant="ghost"
                     size="icon"
                     className="h-8 w-8 shrink-0"
-                    // asChild
+                    asChild
                   >
                     <Link to="/settings" aria-label="Settings">
                       <Settings className="h-4 w-4" />
@@ -183,12 +184,7 @@ export function AppLayout({
 
             {actions}
             <ThemeToggle />
-            <Button
-              variant="ghost"
-              size="icon"
-              // asChild
-              aria-label="Sign out"
-            >
+            <Button variant="ghost" size="icon" asChild aria-label="Sign out">
               <Link to="/login">
                 <LogOut className="h-4 w-4" />
               </Link>
