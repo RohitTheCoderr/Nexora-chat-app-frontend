@@ -1,0 +1,110 @@
+// import type { NexoraUser, Presence } from "@/lib/nexora-data";
+import { cn } from "@/lib/utils";
+
+export type NexoraUser = {
+  id: string;
+  name: string;
+  username: string;
+  presence: Presence;
+  lastSeen: string;
+  bio?: string;
+  email?: string;
+  phone?: string;
+  status?: string;
+  accent: string;
+};
+
+export type Presence = "online" | "offline" | "away";
+export const currentUser: NexoraUser = {
+  id: "me",
+  name: "Rohit kumar",
+  username: "@rohit2003",
+  presence: "online",
+  lastSeen: "Active now",
+  bio: "Product designer. Building calm interfaces and long conversations.",
+  email: "rohitkumar9643017@gmail.com",
+  phone: "+91 9654853181",
+  status: "Focusing — replies may be slow",
+  accent: "oklch(0.585 0.093 178)",
+};
+
+const sizes = {
+  xs: "h-8 w-8 text-[11px]",
+  sm: "h-9 w-9 text-xs",
+  md: "h-11 w-11 text-sm",
+  lg: "h-14 w-14 text-base",
+  xl: "h-24 w-24 text-2xl",
+};
+
+const dotSizes = {
+  xs: "h-2.5 w-2.5",
+  sm: "h-2.5 w-2.5",
+  md: "h-3 w-3",
+  lg: "h-3.5 w-3.5",
+  xl: "h-6 w-6",
+};
+
+function initials(name: string) {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((p) => p[0]?.toUpperCase())
+    .join("");
+}
+
+export function PresenceDot({
+  presence,
+  className,
+}: {
+  presence: Presence;
+  className?: string;
+}) {
+  return (
+    <span
+      className={cn(
+        "rounded-full border-2 border-surface",
+        presence === "online" && "bg-online animate-online-pulse",
+        presence === "away" && "bg-warning",
+        presence === "offline" && "bg-border-strong",
+        className,
+      )}
+    />
+  );
+}
+
+export function UserAvatar({
+  user,
+  size = "md",
+  showPresence = true,
+  className,
+}: {
+  user: NexoraUser;
+  size?: keyof typeof sizes;
+  showPresence?: boolean;
+  className?: string;
+}) {
+  return (
+    <span className={cn("relative inline-block shrink-0", className)}>
+      <span
+        className={cn(
+          "grid place-items-center rounded-2xl font-semibold text-primary-foreground",
+          sizes[size],
+        )}
+        style={{ backgroundColor: user.accent }}
+        aria-hidden
+      >
+        {initials(user.name)}
+      </span>
+      {showPresence ? (
+        <PresenceDot
+          presence={user.presence}
+          className={cn(
+            "absolute -right-0.5 -bottom-0.5 block",
+            dotSizes[size],
+          )}
+        />
+      ) : null}
+    </span>
+  );
+}

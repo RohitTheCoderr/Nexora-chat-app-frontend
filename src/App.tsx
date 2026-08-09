@@ -1,15 +1,22 @@
-import { Button } from "./components/ui/button.tsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { RouterProvider } from "react-router-dom";
+import router from "./routes";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: false,
+      staleTime: 1000 * 60 * 0.5,
+    },
+  },
+});
 
 function App() {
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <Button variant="secondary">secondary Button</Button>
-      <Button variant="outline">outline Button</Button>
-      <Button variant="ghost">ghost Button</Button>
-      <Button variant="destructive">destructive Button</Button>
-      <Button variant="link">link Button</Button>
-      <Button variant="default">default Button</Button>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
   );
 }
 
