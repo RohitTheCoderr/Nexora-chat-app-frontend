@@ -9,6 +9,8 @@ import DocumentTitle, {
 } from "@/components/common/document-title.tsx";
 import ChatPage from "@/features/chat/index.tsx";
 import UserRoute from "./userRoutes.tsx";
+import Login from "@/features/sign-in/index.tsx";
+import ForgetPassword from "@/features/forget-password/index.tsx";
 
 const PublicRoutes = (Component: ComponentType) => (
   <PublicRoute>
@@ -30,18 +32,18 @@ const UserRoutes = (Component: ComponentType) => (
 
 const router = createBrowserRouter([
   {
-    path: ROUTES.RAGISTER,
+    path: ROUTES.REGISTER,
     element: PublicRoutes(RegisterPage),
     handle: { title: "Resiter | Nexora" } satisfies RouteHandle,
   },
   {
     path: ROUTES.LOGIN,
-    element: PublicRoutes(RegisterPage),
-    handle: { title: "Login | Nexora" } satisfies RouteHandle,
+    element: PublicRoutes(Login),
+    handle: { title: "SignIn | Nexora" } satisfies RouteHandle,
   },
   {
     path: ROUTES.FORGET_PASSWORD,
-    element: PublicRoutes(RegisterPage),
+    element: PublicRoutes(ForgetPassword),
     handle: { title: "Forget password | Nexora" } satisfies RouteHandle,
   },
   {
