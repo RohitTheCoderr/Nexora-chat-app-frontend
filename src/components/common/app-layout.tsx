@@ -7,6 +7,7 @@ import {
   Search,
   Settings,
   User,
+  User2,
   Users,
 } from "lucide-react";
 import { useState } from "react";
@@ -24,6 +25,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip.tsx";
+import { useAuth } from "@/features/sign-in/store/authStore.ts";
+import { DialogTrigger } from "../ui/dialog.tsx";
+import { LogoutButton } from "./logout-pop-up.tsx";
 
 const nav: { to: string; label: string; icon: typeof Users; badge?: number }[] =
   [
@@ -49,6 +53,7 @@ export function AppLayout({
 }) {
   const [collapsed, setCollapsed] = useState(false);
   const { pathname } = useLocation();
+  const { userData } = useAuth();
 
   return (
     <TooltipProvider>
@@ -128,16 +133,20 @@ export function AppLayout({
               )}
             >
               <Link to="/profile" className="shrink-0">
-                <UserAvatar user={currentUser} size="sm" />
+                {userData ? (
+                  <UserAvatar user={userData} size="sm" />
+                ) : (
+                  <User2 size={18} />
+                )}{" "}
               </Link>
               {!collapsed ? (
                 <>
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-semibold">
-                      {currentUser.name}
+                      {userData?.name ?? "User"}
                     </p>
                     <p className="truncate text-xs text-muted-foreground">
-                      {currentUser.username}
+                      {userData?.username ?? "@username"}
                     </p>
                   </div>
                   <Button
@@ -183,12 +192,8 @@ export function AppLayout({
             </div>
 
             {actions}
-            <ThemeToggle />
-            <Button variant="ghost" size="icon" asChild aria-label="Sign out">
-              <Link to="/login">
-                <LogOut className="h-4 w-4" />
-              </Link>
-            </Button>
+            <ThemeToggle className="cursor-pointer" />
+            <LogoutButton />
           </header>
 
           <main

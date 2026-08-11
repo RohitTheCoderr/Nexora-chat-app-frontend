@@ -57,9 +57,6 @@ function RegisterForm() {
     usernameQuery.data?.data?.available === false;
 
   const onSubmit = (data: RegisterFormData) => {
-    console.log("Register data:", data);
-
-    // Later:
     registerMutation.mutate(
       {
         name: data.name.trim(),
@@ -252,21 +249,11 @@ function RegisterForm() {
         type="submit"
         className="h-11 w-full rounded-xl"
         disabled={
-          // registerForm.formState.isSubmitting ||
           registerMutation.isPending ||
           usernameQuery.isFetching ||
           usernameTaken
         }
       >
-        {/* {registerForm.formState.isSubmitting ? (
-          <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Creating account...
-          </>
-        ) : (
-          "Create account"
-        )} */}
-
         {registerMutation.isPending ? (
           <>
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />

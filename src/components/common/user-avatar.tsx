@@ -1,4 +1,4 @@
-// import type { NexoraUser, Presence } from "@/lib/nexora-data";
+import type { UserData } from "@/features/sign-in/store/type.ts";
 import { cn } from "@/lib/utils";
 
 export type NexoraUser = {
@@ -79,26 +79,46 @@ export function UserAvatar({
   showPresence = true,
   className,
 }: {
-  user: NexoraUser;
+  user: UserData;
   size?: keyof typeof sizes;
   showPresence?: boolean;
   className?: string;
 }) {
   return (
     <span className={cn("relative inline-block shrink-0", className)}>
-      <span
+      {/* <span
         className={cn(
           "grid place-items-center rounded-2xl font-semibold text-primary-foreground",
           sizes[size],
         )}
-        style={{ backgroundColor: user.accent }}
+        style={{ backgroundColor: "oklch(0.585 0.093 178)" }}
         aria-hidden
       >
         {initials(user.name)}
+      </span> */}
+
+      <span
+        className={cn(
+          "grid place-items-center overflow-hidden rounded-2xl font-semibold text-primary-foreground",
+          sizes[size],
+        )}
+        style={{ backgroundColor: "oklch(0.585 0.093 178)" }}
+        aria-hidden
+      >
+        {user.avatar ? (
+          <img
+            src={user.avatar}
+            alt={user.name}
+            className="h-full w-full object-cover"
+          />
+        ) : (
+          initials(user.name)
+        )}
       </span>
       {showPresence ? (
         <PresenceDot
-          presence={user.presence}
+          // presence={"user.presence"}
+          presence={"online"}
           className={cn(
             "absolute -right-0.5 -bottom-0.5 block",
             dotSizes[size],
