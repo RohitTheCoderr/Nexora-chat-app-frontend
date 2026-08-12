@@ -7,5 +7,6 @@ export const ROUTES = {
   FRIENDS: "/friends",
   FRIENDS_NON: "/friends/non-friends",
   FRIENDS_REQUEST: "/friends/requests",
+  SENDED_FRIENDS_REQUEST: "/friends/sended/requests",
   NOTIFICATIONS: "/notifications",
 };

@@ -14,6 +14,7 @@ import NonFriends from "@/features/friends/components/non-friends/index.tsx";
 import AllFriends from "@/features/friends/components/friends/index.tsx";
 import { NotFound } from "@/components/common/not-found.tsx";
 import RequestFriends from "@/features/friends/components/request-friends/index.tsx";
+import SendedFriendsRequest from "@/features/friends/components/send-friends-request/index.tsx";
 
 const ChatPage = lazy(() => import("@/features/chat/index.tsx"));
 const Login = lazy(() => import("@/features/sign-in/index.tsx"));
@@ -101,11 +102,11 @@ const router = createBrowserRouter([
             element: <RequestFriends />,
             handle: { title: "Friend Requests · Nexora" },
           },
-          // {
-          //   path: "sent",
-          //   element: <SentRequests />,
-          //   handle: { title: "Sent Requests · Nexora" },
-          // },
+          {
+            path: ROUTES.SENDED_FRIENDS_REQUEST,
+            element: <SendedFriendsRequest />,
+            handle: { title: "Sent Requests · Nexora" },
+          },
           // {
           //   path: "rejected",
           //   element: <RejectedRequests />,
