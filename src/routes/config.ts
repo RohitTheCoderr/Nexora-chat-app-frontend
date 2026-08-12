@@ -5,5 +5,7 @@ export const ROUTES = {
   RESET_PASSWORD: "/reset-password/:token",
   FORGET_PASSWORD: "/forgot-password",
   FRIENDS: "/friends",
+  FRIENDS_NON: "/friends/non-friends",
+  FRIENDS_REQUEST: "/friends/requests",
   NOTIFICATIONS: "/notifications",
 };

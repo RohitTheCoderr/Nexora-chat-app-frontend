@@ -1,3 +1,4 @@
+import { useAuthStore } from "@/features/sign-in/store/authStore.ts";
 import axios, { AxiosError, type InternalAxiosRequestConfig } from "axios";
 
 const api = axios.create({
@@ -10,7 +11,7 @@ const api = axios.create({
 // Request interceptor
 api.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    const token = localStorage.getItem("accessToken");
+    const token = useAuthStore.getState().token;
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -35,10 +36,10 @@ api.interceptors.response.use(
       if (status === 401) {
         console.log("Unauthorized");
 
-        localStorage.removeItem("accessToken");
+        useAuthStore.getState().logout();
 
         // Optional:
-        window.location.href = "/login";
+        window.location.href = "/sign-in";
       }
 
       if (status === 403) {

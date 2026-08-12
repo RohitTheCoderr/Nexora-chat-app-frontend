@@ -88,7 +88,9 @@ export function AppLayout({
 
           <nav className="flex-1 space-y-1 px-3 py-3">
             {nav.map((item) => {
-              const active = pathname === item.to;
+              // const active = pathname === item.to;
+              const active =
+                pathname === item.to || pathname.startsWith(`${item.to}/`);
               const link = (
                 <Link
                   to={item.to}
@@ -208,7 +210,9 @@ export function AppLayout({
 
         <nav className="fixed inset-x-0 bottom-0 z-30 flex h-16 items-stretch border-t border-border bg-surface md:hidden">
           {nav.map((item) => {
-            const active = pathname === item.to;
+            // const active = pathname === item.to;
+            const active =
+              pathname === item.to || pathname.startsWith(`${item.to}/`);
             return (
               <Link
                 key={item.to}

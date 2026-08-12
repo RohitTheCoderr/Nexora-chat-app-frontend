@@ -13,8 +13,19 @@ export type NexoraUser = {
   status?: string;
   accent: string;
 };
-
 export type Presence = "online" | "offline" | "away";
+
+type User = {
+  userId: string;
+  name: string;
+  username?: string;
+  avatar?: {
+    url?: string;
+  };
+  status?: Presence;
+  lastSeen?: string;
+};
+
 export const currentUser: NexoraUser = {
   id: "me",
   name: "Rohit kumar",
@@ -79,24 +90,13 @@ export function UserAvatar({
   showPresence = true,
   className,
 }: {
-  user: UserData;
+  user: User;
   size?: keyof typeof sizes;
   showPresence?: boolean;
   className?: string;
 }) {
   return (
     <span className={cn("relative inline-block shrink-0", className)}>
-      {/* <span
-        className={cn(
-          "grid place-items-center rounded-2xl font-semibold text-primary-foreground",
-          sizes[size],
-        )}
-        style={{ backgroundColor: "oklch(0.585 0.093 178)" }}
-        aria-hidden
-      >
-        {initials(user.name)}
-      </span> */}
-
       <span
         className={cn(
           "grid place-items-center overflow-hidden rounded-2xl font-semibold text-primary-foreground",
@@ -105,9 +105,9 @@ export function UserAvatar({
         style={{ backgroundColor: "oklch(0.585 0.093 178)" }}
         aria-hidden
       >
-        {user.avatar ? (
+        {user?.avatar?.url ? (
           <img
-            src={user.avatar}
+            src={user.avatar.url}
             alt={user.name}
             className="h-full w-full object-cover"
           />
@@ -117,7 +117,6 @@ export function UserAvatar({
       </span>
       {showPresence ? (
         <PresenceDot
-          // presence={"user.presence"}
           presence={"online"}
           className={cn(
             "absolute -right-0.5 -bottom-0.5 block",
