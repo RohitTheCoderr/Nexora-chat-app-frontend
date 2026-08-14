@@ -61,7 +61,6 @@ function ResetForm() {
   });
 
   const onSubmit = (value: ResetSchemaType) => {
-    console.log(value);
     if (!token) {
       toast.error("Invalid reset link");
       return;

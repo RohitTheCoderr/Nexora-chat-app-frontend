@@ -55,6 +55,16 @@ export function AppLayout({
   const { pathname } = useLocation();
   const { userData } = useAuth();
 
+  const avatarUser = {
+    userId: userData?.userId || "",
+    name: userData?.name || "",
+    username: userData?.username || "",
+    avatar: userData?.avatar || "",
+    status: "offline",
+  };
+
+  const presence = avatarUser.status === "online";
+
   return (
     <TooltipProvider>
       <div className="flex h-screen w-full overflow-hidden bg-background">
@@ -136,7 +146,7 @@ export function AppLayout({
             >
               <Link to="/profile" className="shrink-0">
                 {userData ? (
-                  <UserAvatar user={userData} size="sm" />
+                  <UserAvatar user={avatarUser} size="sm" />
                 ) : (
                   <User2 size={18} />
                 )}{" "}

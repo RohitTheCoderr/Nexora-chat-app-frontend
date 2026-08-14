@@ -8,10 +8,10 @@ export const ENDPOINT = {
   // friends path
   GET_FRIENDS_LIST: "/friends/request/friends",
   GET_NON_FRIENDS_LIST: "/friends/request/non-friends",
-  SEND_FRIENDS_REQUEST: "/friends/request/:userId",
+  SEND_FRIENDS_REQUEST: "/friends/request",
   GET_FRIENDS_REQUESTS: "/friends/requests",
   GET_SENDED_FRIENDS_REQUESTS: "/friends/sended/requests",
-  ACCEPT_FRIENDS_REQUEST: "/friends/request/accept/:userId",
-  DECLINE_FRIENDS_REQUEST: "/friends/request/decline/:userId",
-  CANCLE_FRIENDS_REQUEST: "/friends/request/cancel/:userId",
+  ACCEPT_FRIENDS_REQUEST: "/friends/request/accept",
+  DECLINE_FRIENDS_REQUEST: "/friends/request/decline",
+  CANCEL_FRIENDS_REQUEST: "/friends/request/cancel",
 };

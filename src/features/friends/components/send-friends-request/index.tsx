@@ -1,16 +1,43 @@
 import { EmptyState } from "@/components/common/empty-friend-card.tsx";
-import { FriendCard } from "../friend-card.tsx";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { User } from "lucide-react";
 import Loader from "@/components/common/loader.tsx";
 import { SendedFriendsRequestListApi } from "./api/index.ts";
+import { SendFriendCard } from "./components/send-friend-card.tsx";
+import { cancelRequestApi } from "../../apis/cancel-request/index.ts";
+import { toast } from "sonner";
+import { useState } from "react";
 
 function SendedFriendsRequest() {
+  const queryClient = useQueryClient();
+  const [actionRequestId, setActionRequestId] = useState<string | null>(null);
+
   const { data, isPending, error } = useQuery({
     queryKey: ["send-friend-request-List"],
     queryFn: SendedFriendsRequestListApi,
   });
   const requestFriends = data?.data || [];
+
+  const { mutate: cancelRequest, isPending: isCancelingRequest } = useMutation({
+    // mutationFn: (userId: string) => cancelRequestApi(userId),
+    mutationFn: (friendRequestId: string) => {
+      setActionRequestId(friendRequestId);
+      return cancelRequestApi(friendRequestId);
+    },
+
+    onSuccess: (response) => {
+      toast.success(response.message);
+      // Refetch send-friend-request-List API
+      queryClient.invalidateQueries({
+        queryKey: ["send-friend-request-List"],
+      });
+    },
+
+    onError: (error) => {
+      console.error(error);
+      toast.error(error.message);
+    },
+  });
 
   if (isPending) {
     return <Loader />;
@@ -24,7 +51,14 @@ function SendedFriendsRequest() {
     <div className="grid grid-cols-1 gap-3">
       {requestFriends.length > 0 ? (
         requestFriends.map((user) => (
-          <FriendCard key={user.userId} user={user} variant="sent" />
+          <SendFriendCard
+            key={user.userId}
+            user={user}
+            handleCancelRequest={(userId) => cancelRequest(userId)}
+            isCancelingRequest={
+              isCancelingRequest && actionRequestId === user.friendRequestId
+            }
+          />
         ))
       ) : (
         <EmptyState
