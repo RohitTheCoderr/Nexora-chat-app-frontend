@@ -33,6 +33,10 @@ function NonFriends() {
       queryClient.invalidateQueries({
         queryKey: ["non-friends"],
       });
+
+      queryClient.invalidateQueries({
+        queryKey: ["sent-friend-requests"],
+      });
     },
 
     onError: (error) => {
@@ -50,6 +54,14 @@ function NonFriends() {
       queryClient.invalidateQueries({
         queryKey: ["non-friends"],
       });
+
+      queryClient.invalidateQueries({
+        queryKey: ["friendsList"],
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["Request-friends-List"],
+      });
     },
 
     onError: (error) => {
@@ -65,6 +77,10 @@ function NonFriends() {
       // Refetch non-friends API
       queryClient.invalidateQueries({
         queryKey: ["non-friends"],
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["Request-friends-List"],
       });
     },
 
