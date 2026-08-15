@@ -1,0 +1,94 @@
+import { UserAvatar } from "@/components/common/user-avatar.tsx";
+import { Button } from "@/components/ui/button.tsx";
+import { cn } from "@/lib/utils.ts";
+import type { friendRequestStatus } from "../../non-friends/api/type.ts";
+
+type User = {
+  userId: string;
+  name: string;
+  username: string;
+  avatar?: avatar;
+  status?: UserStatus;
+  lastSeen?: string | null;
+  friendRequestStatus: friendRequestStatus;
+  friendRequestId: string;
+};
+
+type UserCardProps = {
+  user: User;
+  handleAcceptRequest: (userId: string) => void;
+  handleRejectRequest: (userId: string) => void;
+  isAcceptingRequest: boolean;
+  isRejectingRequest: boolean;
+};
+
+export function FriendRequestCard({
+  user,
+  handleAcceptRequest,
+  handleRejectRequest,
+  isAcceptingRequest,
+  isRejectingRequest,
+}: UserCardProps) {
+  const avatarUser = {
+    userId: user.userId,
+    name: user.name,
+    username: user.username,
+    avatar: user.avatar,
+    status: user.status,
+  };
+
+  const presence = avatarUser.status === "online";
+
+  return (
+    <div className="flex flex-wrap items-center gap-4 rounded-2xl border border-border bg-surface p-2 sm:p-4 shadow-soft transition-shadow hover:shadow-raised">
+      {/* Avatar */}
+      <UserAvatar user={avatarUser} size="md" showPresence={presence} />
+
+      {/* User info */}
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-sm font-semibold">{user.name}</p>
+
+        <p className="truncate text-xs text-muted-foreground">
+          @{user.username}
+        </p>
+
+        {user.status && (
+          <p
+            className={cn(
+              "mt-1 text-xs font-medium",
+              user.status === "online"
+                ? "text-success"
+                : "text-muted-foreground",
+            )}
+          >
+            {user.status === "online" ? "Online" : (user.lastSeen ?? "Offline")}
+          </p>
+        )}
+      </div>
+
+      {/* Actions */}
+      <div className="flex shrink-0 gap-2">
+        {user.friendRequestStatus === "PENDING_RECEIVED" && (
+          <div className="flex gap-2">
+            <Button
+              className="cursor-pointer"
+              disabled={isAcceptingRequest}
+              onClick={() => handleAcceptRequest(user.friendRequestId)}
+            >
+              {isAcceptingRequest ? "Accepting..." : "Accept"}
+            </Button>
+
+            <Button
+              className="cursor-pointer"
+              variant="outline"
+              disabled={isRejectingRequest}
+              onClick={() => handleRejectRequest(user.friendRequestId)}
+            >
+              {isRejectingRequest ? "Rejecting..." : "Reject"}
+            </Button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

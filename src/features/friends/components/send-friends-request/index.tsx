@@ -13,13 +13,12 @@ function SendedFriendsRequest() {
   const [actionRequestId, setActionRequestId] = useState<string | null>(null);
 
   const { data, isPending, error } = useQuery({
-    queryKey: ["send-friend-request-List"],
+    queryKey: ["sent-friend-requests"],
     queryFn: SendedFriendsRequestListApi,
   });
   const requestFriends = data?.data || [];
 
   const { mutate: cancelRequest, isPending: isCancelingRequest } = useMutation({
-    // mutationFn: (userId: string) => cancelRequestApi(userId),
     mutationFn: (friendRequestId: string) => {
       setActionRequestId(friendRequestId);
       return cancelRequestApi(friendRequestId);
@@ -29,7 +28,11 @@ function SendedFriendsRequest() {
       toast.success(response.message);
       // Refetch send-friend-request-List API
       queryClient.invalidateQueries({
-        queryKey: ["send-friend-request-List"],
+        queryKey: ["sent-friend-requests"],
+      });
+
+      queryClient.invalidateQueries({
+        queryKey: ["non-friends"],
       });
     },
 
