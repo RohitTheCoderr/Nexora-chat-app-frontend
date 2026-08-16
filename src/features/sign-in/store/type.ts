@@ -6,5 +6,6 @@ export type UserData = {
   username: string;
   email: string;
   role: UserRole;
-  avatar: avatar | null;
+  avatar: avatar;
+  status: UserStatus;
 };

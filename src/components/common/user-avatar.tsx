@@ -1,22 +1,9 @@
-import type { UserData } from "@/features/sign-in/store/type.ts";
 import { cn } from "@/lib/utils";
 
-export type NexoraUser = {
-  id: string;
-  name: string;
-  username: string;
-  presence: Presence;
-  lastSeen: string;
-  bio?: string;
-  email?: string;
-  phone?: string;
-  status?: string;
-  accent: string;
-};
-export type Presence = "online" | "offline" | "away";
+export type Presence = "online" | "offline";
 
 type User = {
-  userId: string;
+  userId?: string;
   name: string;
   username?: string;
   avatar?: {
@@ -24,19 +11,6 @@ type User = {
   };
   status?: Presence;
   lastSeen?: string;
-};
-
-export const currentUser: NexoraUser = {
-  id: "me",
-  name: "Rohit kumar",
-  username: "@rohit2003",
-  presence: "online",
-  lastSeen: "Active now",
-  bio: "Product designer. Building calm interfaces and long conversations.",
-  email: "rohitkumar9643017@gmail.com",
-  phone: "+91 9654853181",
-  status: "Focusing — replies may be slow",
-  accent: "oklch(0.585 0.093 178)",
 };
 
 const sizes = {
@@ -76,7 +50,6 @@ export function PresenceDot({
       className={cn(
         "rounded-full border-2 border-surface",
         presence === "online" && "bg-online animate-online-pulse",
-        presence === "away" && "bg-warning",
         presence === "offline" && "bg-border-strong",
         className,
       )}
@@ -87,12 +60,12 @@ export function PresenceDot({
 export function UserAvatar({
   user,
   size = "md",
-  showPresence = true,
+  showPresence = "offline",
   className,
 }: {
   user: User;
   size?: keyof typeof sizes;
-  showPresence?: boolean;
+  showPresence?: Presence;
   className?: string;
 }) {
   return (
@@ -117,7 +90,7 @@ export function UserAvatar({
       </span>
       {showPresence ? (
         <PresenceDot
-          presence={"online"}
+          presence={showPresence}
           className={cn(
             "absolute -right-0.5 -bottom-0.5 block",
             dotSizes[size],

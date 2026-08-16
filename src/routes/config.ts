@@ -9,4 +9,5 @@ export const ROUTES = {
   FRIENDS_REQUEST: "/friends/requests",
   SENDED_FRIENDS_REQUEST: "/friends/sended/requests",
   NOTIFICATIONS: "/notifications",
+  PROFILE: "/profile",
 };

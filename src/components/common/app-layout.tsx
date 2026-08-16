@@ -1,8 +1,6 @@
 import {
-  Badge,
   Bell,
   ChevronLeft,
-  LogOut,
   MessageSquare,
   Search,
   Settings,
@@ -16,7 +14,7 @@ import { NexoraLogo, NexoraMark } from "./logo-setup.tsx";
 import { Button } from "../ui/button.tsx";
 import { cn } from "@/lib/utils.ts";
 
-import { currentUser, UserAvatar } from "./user-avatar.tsx";
+import { UserAvatar } from "./user-avatar.tsx";
 import { Input } from "../ui/input.tsx";
 import { ThemeToggle } from "./theme-toggle.tsx";
 import {
@@ -26,17 +24,10 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip.tsx";
 import { useAuth } from "@/features/sign-in/store/authStore.ts";
-import { DialogTrigger } from "../ui/dialog.tsx";
 import { LogoutButton } from "./logout-pop-up.tsx";
-
-const nav: { to: string; label: string; icon: typeof Users; badge?: number }[] =
-  [
-    { to: "/", label: "Chats", icon: MessageSquare, badge: 3 },
-    { to: "/notifications", label: "Notifications", icon: Bell, badge: 2 },
-    { to: "/friends", label: "Friends", icon: Users },
-    { to: "/profile", label: "Profile", icon: User },
-    { to: "/settings", label: "Settings", icon: Settings },
-  ];
+import { useQuery } from "@tanstack/react-query";
+import { getUnreadNotificationCount } from "@/shared/global-apis/unread-notification-count.ts";
+import { Badge } from "../ui/badge.tsx";
 
 export function AppLayout({
   children,
@@ -55,15 +46,40 @@ export function AppLayout({
   const { pathname } = useLocation();
   const { userData } = useAuth();
 
+  const { data: unreadNotificationData } = useQuery({
+    queryKey: ["unread-notification-count"],
+    queryFn: getUnreadNotificationCount,
+  });
+
+  const unreadCount = unreadNotificationData?.data?.count ?? 0;
+
   const avatarUser = {
-    userId: userData?.userId || "",
-    name: userData?.name || "",
-    username: userData?.username || "",
-    avatar: userData?.avatar || "",
-    status: "offline",
+    userId: userData?.userId,
+    name: userData?.name ?? "",
+    username: userData?.username,
+    avatar: userData?.avatar,
+    status: userData?.status,
   };
 
-  const presence = avatarUser.status === "online";
+  const presence = userData?.status;
+
+  const nav: {
+    to: string;
+    label: string;
+    icon: typeof Users;
+    badge?: number;
+  }[] = [
+    { to: "/", label: "Chats", icon: MessageSquare, badge: 3 },
+    {
+      to: "/notifications",
+      label: "Notifications",
+      icon: Bell,
+      badge: unreadCount,
+    },
+    { to: "/friends", label: "Friends", icon: Users },
+    { to: "/profile", label: "Profile", icon: User },
+    { to: "/settings", label: "Settings", icon: Settings },
+  ];
 
   return (
     <TooltipProvider>
@@ -98,7 +114,6 @@ export function AppLayout({
 
           <nav className="flex-1 space-y-1 px-3 py-3">
             {nav.map((item) => {
-              // const active = pathname === item.to;
               const active =
                 pathname === item.to || pathname.startsWith(`${item.to}/`);
               const link = (
@@ -119,8 +134,8 @@ export function AppLayout({
                   {!collapsed ? (
                     <span className="truncate">{item.label}</span>
                   ) : null}
-                  {!collapsed && item.badge ? (
-                    <Badge className="ml-auto h-5 min-w-5 justify-center rounded-full px-1.5 text-[11px]">
+                  {!collapsed && item.badge && item.badge > 0 ? (
+                    <Badge className="ml-auto h-5 w-5 justify-center rounded-full px-1.5 text-[11px]">
                       {item.badge}
                     </Badge>
                   ) : null}
@@ -146,7 +161,11 @@ export function AppLayout({
             >
               <Link to="/profile" className="shrink-0">
                 {userData ? (
-                  <UserAvatar user={avatarUser} size="sm" />
+                  <UserAvatar
+                    user={avatarUser}
+                    size="sm"
+                    showPresence={presence}
+                  />
                 ) : (
                   <User2 size={18} />
                 )}{" "}
