@@ -15,6 +15,7 @@ import AllFriends from "@/features/friends/components/friends/index.tsx";
 import { NotFound } from "@/components/common/not-found.tsx";
 import RequestFriends from "@/features/friends/components/request-friends/index.tsx";
 import SendedFriendsRequest from "@/features/friends/components/send-friends-request/index.tsx";
+import Profile from "@/features/profile/index.tsx";
 
 const ChatPage = lazy(() => import("@/features/chat/index.tsx"));
 const Login = lazy(() => import("@/features/sign-in/index.tsx"));
@@ -113,6 +114,11 @@ const router = createBrowserRouter([
           //   handle: { title: "Rejected Requests · Nexora" },
           // },
         ],
+      },
+      {
+        path: ROUTES.PROFILE,
+        element: <Profile />,
+        handle: { title: "Your profile | Nexora" },
       },
     ],
   },

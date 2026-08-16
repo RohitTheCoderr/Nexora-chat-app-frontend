@@ -1,110 +1,35 @@
 import { EmptyState } from "@/components/common/empty-friend-card.tsx";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { nonFriendsApi } from "./api/index.ts";
 import { User } from "lucide-react";
 import { NonFriendCard } from "./components/non-friend-card.tsx";
-import { sendRequestApi } from "../../apis/send-request/index.ts";
-import { toast } from "sonner";
-import { acceptRequestApi } from "../../apis/accept-request/index.ts";
-import { rejectRequestApi } from "../../apis/reject-request/index.ts";
-import { cancelRequestApi } from "../../apis/cancel-request/index.ts";
-import { useState } from "react";
+import {
+  useAcceptFriendRequest,
+  useCancelFriendRequest,
+  useRejectFriendRequest,
+  useSendFriendRequest,
+} from "../../hooks/index.ts";
 
 function NonFriends() {
-  const queryClient = useQueryClient();
-  const [sendingUserId, setSendingUserId] = useState<string | null>(null);
-
   const { data, isPending, error } = useQuery({
     queryKey: ["non-friends"],
     queryFn: nonFriendsApi,
   });
   const nonFriends = data?.data || [];
+  const {
+    mutate: sendRequest,
+    isPending: isSendingRequest,
+    variables: sendingUserId,
+  } = useSendFriendRequest();
 
-  const { mutate: sendRequest, isPending: isSendingRequest } = useMutation({
-    // mutationFn: (userId: string) => sendRequestApi(userId),
-    mutationFn: (userId: string) => {
-      setSendingUserId(userId);
-      return sendRequestApi(userId);
-    },
+  const { mutate: acceptRequest, isPending: isAcceptingRequest } =
+    useAcceptFriendRequest();
 
-    onSuccess: (response) => {
-      toast.success(response.message);
-      // Refetch non-friends API
-      queryClient.invalidateQueries({
-        queryKey: ["non-friends"],
-      });
+  const { mutate: rejectRequest, isPending: isRejectingRequest } =
+    useRejectFriendRequest();
 
-      queryClient.invalidateQueries({
-        queryKey: ["sent-friend-requests"],
-      });
-    },
-
-    onError: (error) => {
-      console.error(error);
-      toast.error(error.message);
-    },
-  });
-
-  const { mutate: acceptRequest, isPending: isAcceptingRequest } = useMutation({
-    mutationFn: (friendRequestId: string) => acceptRequestApi(friendRequestId),
-
-    onSuccess: (response) => {
-      toast.success(response.message);
-      // Refetch non-friends API
-      queryClient.invalidateQueries({
-        queryKey: ["non-friends"],
-      });
-
-      queryClient.invalidateQueries({
-        queryKey: ["friendsList"],
-      });
-
-      queryClient.invalidateQueries({
-        queryKey: ["Request-friends-List"],
-      });
-    },
-
-    onError: (error) => {
-      console.error(error);
-      toast.error(error.message);
-    },
-  });
-  const { mutate: rejectRequest, isPending: isRejectingRequest } = useMutation({
-    mutationFn: (friendRequestId: string) => rejectRequestApi(friendRequestId),
-
-    onSuccess: (response) => {
-      toast.success(response.message);
-      // Refetch non-friends API
-      queryClient.invalidateQueries({
-        queryKey: ["non-friends"],
-      });
-
-      queryClient.invalidateQueries({
-        queryKey: ["Request-friends-List"],
-      });
-    },
-
-    onError: (error) => {
-      console.error(error);
-      toast.error(error.message);
-    },
-  });
-  const { mutate: cancelRequest, isPending: isCancelingRequest } = useMutation({
-    mutationFn: (friendRequestId: string) => cancelRequestApi(friendRequestId),
-
-    onSuccess: (response) => {
-      toast.success(response.message);
-      // Refetch non-friends API
-      queryClient.invalidateQueries({
-        queryKey: ["non-friends"],
-      });
-    },
-
-    onError: (error) => {
-      console.error(error);
-      toast.error(error.message);
-    },
-  });
+  const { mutate: cancelRequest, isPending: isCancelingRequest } =
+    useCancelFriendRequest();
 
   if (isPending) {
     return <div>Loading...</div>;

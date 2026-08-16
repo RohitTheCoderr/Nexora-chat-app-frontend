@@ -14,4 +14,11 @@ export const ENDPOINT = {
   ACCEPT_FRIENDS_REQUEST: "/friends/request/accept",
   DECLINE_FRIENDS_REQUEST: "/friends/request/decline",
   CANCEL_FRIENDS_REQUEST: "/friends/request/cancel",
+
+  // notifications
+  GET_ALL_NOTIFICATIONS: "/notifications",
+  GET_UNREAD_NOTIFICATIONS_BY_TYPE: "/notifications/unread",
+  GET_UNREAD_NOTIFICATIONS_COUNT_BY_TYPE: "/notifications/unread-count",
+  MARKED_READ_NOTIFICATIONS_BY_ID: "/notifications/read",
+  MARKED_ALL_READ_NOTIFICATIONS_BY_TYPE: "/notifications/all-read",
 };
