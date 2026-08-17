@@ -21,4 +21,10 @@ export const ENDPOINT = {
   GET_UNREAD_NOTIFICATIONS_COUNT_BY_TYPE: "/notifications/unread-count",
   MARKED_READ_NOTIFICATIONS_BY_ID: "/notifications/read",
   MARKED_ALL_READ_NOTIFICATIONS_BY_TYPE: "/notifications/all-read",
+
+  //  profile
+  GET_PROFILE: "users/me",
+  CREATE_PROFILE: "users/create-profile", //post
+  UPDATE_PROFILE: "users/update-profile", // PUT
+  DELETE_AVATAR: "users/delete-avatar", // DELETE
 };
