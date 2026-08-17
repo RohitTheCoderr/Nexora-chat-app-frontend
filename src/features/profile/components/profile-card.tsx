@@ -9,6 +9,7 @@ import {
   Pencil,
   Phone,
   Radio,
+  Verified,
 } from "lucide-react";
 import type { profile } from "../apis/get-profile/type.ts";
 
@@ -27,14 +28,22 @@ function ProfileCard({ profile, editing, handleEdit }: profileProps) {
     userId: profile.userId,
     lastSeen: profile.lastSeen,
   };
-  const { email, phone, status, lastSeen, isActive } = profile ?? {};
+  const { email, phone, status, lastSeen, isVerified } = profile ?? {};
 
   const info = [
     { icon: Mail, label: "Email", value: email },
     { icon: Phone, label: "Phone", value: phone },
     { icon: Radio, label: "Status", value: status },
-    { icon: Clock, label: "Last seen", value: lastSeen },
-    { icon: ActivitySquare, label: "Active", value: isActive },
+    {
+      icon: Clock,
+      label: "Last seen",
+      value: lastSeen ? lastSeen : "Not available",
+    },
+    {
+      icon: Verified,
+      label: "Verified",
+      value: isVerified ? "Verified" : "Not verified",
+    },
   ];
   return (
     <div>

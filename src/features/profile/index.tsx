@@ -25,8 +25,7 @@ function Profile() {
   }
 
   return (
-    <AppLayout>
-      profile
+    <AppLayout title="Profile" subtitle="How you appear across Nexora">
       <ProfileCard
         profile={profileData}
         editing={editing}
