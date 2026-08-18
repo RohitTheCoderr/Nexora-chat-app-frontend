@@ -1,8 +1,50 @@
 import { UserAvatar } from "@/components/common/user-avatar.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { Camera, KeyRound, Pencil } from "lucide-react";
+import {
+  ActivitySquare,
+  Camera,
+  Clock,
+  KeyRound,
+  Mail,
+  Pencil,
+  Phone,
+  Radio,
+  Verified,
+} from "lucide-react";
+import type { profile } from "../apis/get-profile/type.ts";
 
-function ProfileCard() {
+type profileProps = {
+  profile: profile;
+  handleEdit: () => void;
+  editing: boolean;
+};
+
+function ProfileCard({ profile, editing, handleEdit }: profileProps) {
+  const currentUser = {
+    name: profile.name,
+    username: profile.username,
+    avatar: profile.avatar,
+    status: profile.status,
+    userId: profile.userId,
+    lastSeen: profile.lastSeen,
+  };
+  const { email, phone, status, lastSeen, isVerified } = profile ?? {};
+
+  const info = [
+    { icon: Mail, label: "Email", value: email },
+    { icon: Phone, label: "Phone", value: phone },
+    { icon: Radio, label: "Status", value: status },
+    {
+      icon: Clock,
+      label: "Last seen",
+      value: lastSeen ? lastSeen : "Not available",
+    },
+    {
+      icon: Verified,
+      label: "Verified",
+      value: isVerified ? "Verified" : "Not verified",
+    },
+  ];
   return (
     <div>
       <div className="mx-auto max-w-3xl space-y-6">
@@ -25,19 +67,16 @@ function ProfileCard() {
               </div>
             </div>
             <div className="min-w-0 flex-1 pt-2">
-              <h2 className="truncate text-xl font-bold">{currentUser.name}</h2>
+              <h2 className="truncate text-xl font-bold">{profile.name}</h2>
               <p className="text-sm text-muted-foreground">
-                {currentUser.username}
+                {profile.username}
               </p>
               <p className="mt-2 max-w-lg text-sm leading-relaxed text-muted-foreground">
-                {currentUser.bio}
+                {profile.bio}
               </p>
             </div>
             <div className="flex shrink-0 gap-2">
-              <Button
-                className="rounded-xl"
-                onClick={() => setEditing((e) => !e)}
-              >
+              <Button className="rounded-xl" onClick={handleEdit}>
                 <Pencil className="mr-1.5 h-3.5 w-3.5" />{" "}
                 {editing ? "Close editor" : "Edit profile"}
               </Button>
