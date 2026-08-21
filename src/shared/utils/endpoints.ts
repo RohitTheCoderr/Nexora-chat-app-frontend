@@ -24,7 +24,11 @@ export const ENDPOINT = {
 
   //  profile
   GET_PROFILE: "users/me",
-  CREATE_PROFILE: "users/create-profile", //post
-  UPDATE_PROFILE: "users/update-profile", // PUT
-  DELETE_AVATAR: "users/delete-avatar", // DELETE
+  CREATE_PROFILE: "/users/create-profile", //post
+  UPDATE_PROFILE: "/users/update-profile", // PUT
+  DELETE_AVATAR: "/users/delete-avatar", // DELETE
+
+
+  // session device
+  SESSION:"/sessions"
 };

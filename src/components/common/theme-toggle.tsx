@@ -1,34 +1,74 @@
-import { useEffect, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
 import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const KEY = "nexora-theme";
 
-export function useTheme() {
-  const [theme, setTheme] = useState<"light" | "dark">("light");
+type Theme = "light" | "dark";
+
+type ThemeContextType = {
+  theme: Theme;
+  setTheme: (theme: Theme) => void;
+  toggle: () => void;
+};
+
+const ThemeContext = createContext<ThemeContextType | null>(null);
+
+export function ThemeProvider({ children }: { children: ReactNode }) {
+  const [theme, setThemeState] = useState<Theme>("light");
 
   useEffect(() => {
     const stored = window.localStorage.getItem(KEY);
-    const initial = stored === "dark" ? "dark" : "light";
-    setTheme(initial);
-    document.documentElement.classList.toggle("dark", initial === "dark");
+
+    const initial: Theme = stored === "dark" ? "dark" : "light";
+
+    setThemeState(initial);
+    document.documentElement.classList.toggle(
+      "dark",
+      initial === "dark",
+    );
   }, []);
 
-  const apply = (next: "light" | "dark") => {
-    setTheme(next);
+  const setTheme = (next: Theme) => {
+    setThemeState(next);
     window.localStorage.setItem(KEY, next);
-    document.documentElement.classList.toggle("dark", next === "dark");
+
+    document.documentElement.classList.toggle(
+      "dark",
+      next === "dark",
+    );
   };
 
-  return {
-    theme,
-    setTheme: apply,
-    toggle: () => apply(theme === "dark" ? "light" : "dark"),
+  const toggle = () => {
+    setTheme(theme === "dark" ? "light" : "dark");
   };
+
+  return (
+    <ThemeContext.Provider value={{ theme, setTheme, toggle }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+}
+
+export function useTheme() {
+  const context = useContext(ThemeContext);
+
+  if (!context) {
+    throw new Error("useTheme must be used inside ThemeProvider");
+  }
+
+  return context;
 }
 
 export function ThemeToggle({ className }: { className?: string }) {
   const { theme, toggle } = useTheme();
+
   return (
     <Button
       variant="ghost"
@@ -36,7 +76,9 @@ export function ThemeToggle({ className }: { className?: string }) {
       className={className}
       onClick={toggle}
       aria-label={
-        theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+        theme === "dark"
+          ? "Switch to light mode"
+          : "Switch to dark mode"
       }
     >
       {theme === "dark" ? (

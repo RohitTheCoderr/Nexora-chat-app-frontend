@@ -214,13 +214,13 @@ export function AppLayout({
               </div>
             </div>
 
-            <div className="relative hidden w-64 lg:block">
+            {/* <div className="relative hidden w-64 lg:block">
               <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 placeholder="Search Nexora"
                 className="h-10 rounded-xl border-border bg-muted/60 pl-9"
               />
-            </div>
+            </div> */}
 
             {actions}
             <ThemeToggle className="cursor-pointer" />

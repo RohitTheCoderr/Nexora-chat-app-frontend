@@ -1,12 +1,13 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { UserData } from "./type.ts";
+import type { UserData } from "../api/type";
 
 interface AuthState {
   token: string | null;
   userData: UserData | null;
 
   setAuth: (token: string, userData: UserData) => void;
+   setUserData: (userData: UserData) => void;
   logout: () => void;
 }
 
@@ -22,6 +23,11 @@ export const useAuthStore = create<AuthState>()(
           userData,
         });
       },
+      setUserData: (userData:UserData) => {
+  set({
+    userData,
+  });
+},
 
       logout: () => {
         set({
@@ -45,6 +51,8 @@ export const useAuth = () => {
   const userData = useAuthStore((state) => state.userData);
   const logout = useAuthStore((state) => state.logout);
 
+  const setUserData = useAuthStore((state) => state.setUserData);
+
   const setAuth = useAuthStore((state) => state.setAuth);
 
   return {
@@ -52,5 +60,6 @@ export const useAuth = () => {
     userData,
     logout,
     setAuth,
+    setUserData,
   };
 };
