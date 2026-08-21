@@ -32,18 +32,24 @@ function Profile() {
     return <div>Loading...</div>;
   }
 
-  if (!profileData) {
-    return <div>Profile not found</div>;
-  }
-
   return (
     <AppLayout title="Profile" subtitle="How you appear across Nexora">
-      <ProfileCard
+{profileData && (
+  <>
+    <ProfileCard
+      profile={profileData}
+      editing={editing}
+      handleEdit={() => setEditing((prev) => !prev)}
+    />
+
+    {editing && (
+      <ProfileForm
         profile={profileData}
-        editing={editing}
-        handleEdit={() => setEditing((prev) => !prev)}
+        setEditing={setEditing}
       />
-      {editing && <ProfileForm profile={profileData} setEditing={setEditing} />}
+    )}
+  </>
+)}
     </AppLayout>
   );
 }
