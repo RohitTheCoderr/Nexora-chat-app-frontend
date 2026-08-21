@@ -1,7 +1,7 @@
 import { UserAvatar } from "@/components/common/user-avatar.tsx";
 import { Button } from "@/components/ui/button.tsx";
+import { createProfileApi } from "../apis/create-profile/index.ts";
 import {
-  ActivitySquare,
   Camera,
   Clock,
   KeyRound,
@@ -11,6 +11,10 @@ import {
   Radio,
   Verified,
 } from "lucide-react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRef } from "react";
+import { toast } from "sonner";
+import type { AxiosError } from "axios";
 import type { profile } from "../apis/get-profile/type.ts";
 
 type profileProps = {
@@ -20,6 +24,37 @@ type profileProps = {
 };
 
 function ProfileCard({ profile, editing, handleEdit }: profileProps) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const queryClient = useQueryClient();
+  const { mutate: updateAvatar, isPending: isUploading } = useMutation({
+    mutationFn: createProfileApi,
+    onSuccess: (response) => {
+      toast.success(response.message || "Profile photo updated");
+      queryClient.invalidateQueries({ queryKey: ["user-profile-data"] });
+    },
+    onError: (error: AxiosError<ApiResponse<null>>) => {
+      toast.error(error.response?.data?.message ?? error.message);
+    },
+  });
+
+  const handleAvatarChange = (file?: File) => {
+    if (!file) return;
+
+    if (!["image/jpeg", "image/png"].includes(file.type)) {
+      toast.error("Only PNG and JPG images are supported");
+      return;
+    }
+
+    if (file.size > 2 * 1024 * 1024) {
+      toast.error("Profile photo must be 2 MB or smaller");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("avatar", file);
+    updateAvatar(formData);
+  };
+
   const currentUser = {
     name: profile.name,
     username: profile.username,
@@ -59,11 +94,24 @@ function ProfileCard({ profile, editing, handleEdit }: profileProps) {
                   className="ring-4 ring-surface"
                 />
                 <button
+                  type="button"
                   className="absolute -right-1 -bottom-1 grid h-9 w-9 place-items-center rounded-xl bg-primary text-primary-foreground shadow-raised transition-transform hover:scale-105"
                   aria-label="Change avatar"
+                  disabled={isUploading}
+                  onClick={() => fileInputRef.current?.click()}
                 >
-                  <Camera className="h-4 w-4" />
+                  <Camera className={isUploading ? "h-4 w-4 animate-pulse" : "h-4 w-4"} />
                 </button>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/png,image/jpeg"
+                  className="hidden"
+                  onChange={(event) => {
+                    handleAvatarChange(event.target.files?.[0]);
+                    event.target.value = "";
+                  }}
+                />
               </div>
             </div>
             <div className="min-w-0 flex-1 pt-2">
