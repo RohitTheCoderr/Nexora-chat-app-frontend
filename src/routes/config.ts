@@ -3,6 +3,7 @@ export const ROUTES = {
   REGISTER: "/register",
   LOGIN: "/sign-in",
   RESET_PASSWORD: "/reset-password/:token",
+  CHANGE_PASSWORD: "/change-password/:token",
   FORGET_PASSWORD: "/forgot-password",
   FRIENDS: "/friends",
   FRIENDS_NON: "/friends/non-friends",
@@ -10,4 +11,5 @@ export const ROUTES = {
   SENDED_FRIENDS_REQUEST: "/friends/sended/requests",
   NOTIFICATIONS: "/notifications",
   PROFILE: "/profile",
+  SETTINGS: "/settings",
 };

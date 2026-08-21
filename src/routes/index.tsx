@@ -16,6 +16,7 @@ import { NotFound } from "@/components/common/not-found.tsx";
 import RequestFriends from "@/features/friends/components/request-friends/index.tsx";
 import SendedFriendsRequest from "@/features/friends/components/send-friends-request/index.tsx";
 import Profile from "@/features/profile/index.tsx";
+import Settings from "@/features/settings/index.tsx";
 
 const ChatPage = lazy(() => import("@/features/chat/index.tsx"));
 const Login = lazy(() => import("@/features/sign-in/index.tsx"));
@@ -55,7 +56,13 @@ const router = createBrowserRouter([
     handle: { title: "Reset password | Nexora" } satisfies RouteHandle,
   },
 
-  // authentication user can go on these pages
+   {
+    path: ROUTES.CHANGE_PASSWORD,
+    element: <ResetPassword/>,
+    handle: { title: "Change password | Nexora" } satisfies RouteHandle,
+  },
+
+  // authenticated user can go on these pages
   {
     path: ROUTES.HOME,
     element: (
@@ -119,6 +126,11 @@ const router = createBrowserRouter([
         path: ROUTES.PROFILE,
         element: <Profile />,
         handle: { title: "Your profile | Nexora" },
+      },
+      {
+        path: ROUTES.SETTINGS,
+        element: <Settings />,
+        handle: { title: "Settings | Nexora" },
       },
     ],
   },
