@@ -4,12 +4,24 @@ import ProfileForm from "./components/profile-form.tsx";
 import { useQuery } from "@tanstack/react-query";
 import { getProfileApi } from "./apis/get-profile/index.ts";
 import { useState } from "react";
+import { useAuth } from "../sign-in/store/authStore.ts";
 
 function Profile() {
   const [editing, setEditing] = useState(false);
+
+  const {setUserData} = useAuth();
+  
   const { data: profile, isLoading } = useQuery({
     queryKey: ["user-profile-data"],
-    queryFn: () => getProfileApi(),
+    queryFn: async () => {
+      const response = await getProfileApi();
+
+      if (response.data) {
+        setUserData(response.data);
+      }
+
+      return response;
+    },
   });
 
   // update prfile api call

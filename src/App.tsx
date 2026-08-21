@@ -3,6 +3,7 @@ import { RouterProvider } from "react-router-dom";
 import router from "./routes";
 import { TooltipProvider } from "./components/ui/tooltip.tsx";
 import { Toaster } from "sonner";
+import { ThemeProvider } from "./components/common/theme-toggle.tsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -17,6 +18,7 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
+         <ThemeProvider>
       <TooltipProvider>
         <Toaster
           position="top-right"
@@ -41,8 +43,10 @@ function App() {
             },
           }}
         />
+
         <RouterProvider router={router} />
       </TooltipProvider>
+         </ThemeProvider>
     </QueryClientProvider>
   );
 }
