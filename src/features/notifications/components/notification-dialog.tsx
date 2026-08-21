@@ -14,8 +14,6 @@ import {
   MessageSquare,
   UserPlus,
   Users,
-  Check,
-  X,
   type LucideIcon,
 } from "lucide-react";
 
@@ -57,7 +55,7 @@ function NotificationDialog({
 
   const user = notification.sender;
 
-  const presence = notification.sender?.status;
+  const presence = notification.sender?.status ?? "offline";
 
   const formattedTime = new Date(notification.receivingDate).toLocaleString();
 

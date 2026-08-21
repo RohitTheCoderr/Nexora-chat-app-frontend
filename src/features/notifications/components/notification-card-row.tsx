@@ -1,4 +1,3 @@
-import { UserAvatar } from "@/components/common/user-avatar.tsx";
 import { cn } from "@/lib/utils.ts";
 import { MessageSquare, UserPlus, Users, type LucideIcon } from "lucide-react";
 import type { Notification } from "../apis/notification/type.ts";

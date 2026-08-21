@@ -1,4 +1,3 @@
-import type { number } from "zod";
 
 declare global {
   interface ApiResponse<T> {

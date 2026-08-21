@@ -79,7 +79,7 @@ function ProfileForm({ profile, setEditing }: ProfileFormProps) {
     handleSubmit,
     watch,
     setValue,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
     defaultValues: {

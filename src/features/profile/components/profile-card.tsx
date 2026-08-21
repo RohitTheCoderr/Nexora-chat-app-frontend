@@ -80,6 +80,9 @@ function ProfileCard({ profile, editing, handleEdit }: profileProps) {
       value: isVerified ? "Verified" : "Not verified",
     },
   ];
+
+  
+  const presence = status ?? "offline";
   return (
     <div>
       <div className="mx-auto max-w-3xl space-y-6">
@@ -92,6 +95,7 @@ function ProfileCard({ profile, editing, handleEdit }: profileProps) {
                   user={currentUser}
                   size="xl"
                   className="ring-4 ring-surface"
+                  showPresence={presence}
                 />
                 <button
                   type="button"
