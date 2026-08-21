@@ -2,7 +2,6 @@ import {
   Bell,
   ChevronLeft,
   MessageSquare,
-  Search,
   Settings,
   User,
   User2,
@@ -15,7 +14,6 @@ import { Button } from "../ui/button.tsx";
 import { cn } from "@/lib/utils.ts";
 
 import { UserAvatar } from "./user-avatar.tsx";
-import { Input } from "../ui/input.tsx";
 import { ThemeToggle } from "./theme-toggle.tsx";
 import {
   Tooltip,
