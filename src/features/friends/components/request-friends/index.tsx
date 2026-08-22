@@ -7,6 +7,7 @@ import { FriendRequestCard } from "./components/friend-request-card.tsx";
 import { acceptRequestApi } from "../../apis/accept-request/index.ts";
 import { toast } from "sonner";
 import { rejectRequestApi } from "../../apis/reject-request/index.ts";
+import { FriendSkeleton } from "@/components/common/friend-skeleton.tsx";
 
 function RequestFriends() {
   const queryClient = useQueryClient();
@@ -59,19 +60,16 @@ function RequestFriends() {
     },
   });
 
-  if (isPending) {
-    return <Loader />;
-  }
-
   if (error) {
     return <div>Something went wrong.</div>;
   }
 
   return (
     <div className="grid grid-cols-1 gap-3">
-      {requestFriends.length > 0 ? (
+      {isPending ? (
+        <FriendSkeleton />
+      ) : requestFriends.length > 0 ? (
         requestFriends.map((user) => (
-          // <FriendCard key={user.userId} user={user} variant="incoming" />
           <FriendRequestCard
             key={user.userId}
             user={user}

@@ -9,6 +9,7 @@ import {
   useRejectFriendRequest,
   useSendFriendRequest,
 } from "../../hooks/index.ts";
+import { FriendSkeleton } from "@/components/common/friend-skeleton.tsx";
 
 function NonFriends() {
   const { data, isPending, error } = useQuery({
@@ -31,19 +32,16 @@ function NonFriends() {
   const { mutate: cancelRequest, isPending: isCancelingRequest } =
     useCancelFriendRequest();
 
-  if (isPending) {
-    return <div>Loading...</div>;
-  }
-
   if (error) {
     return <div>Something went wrong.</div>;
   }
 
   return (
     <div className="grid grid-cols-1 gap-3">
-      {nonFriends.length > 0 ? (
+      {isPending ? (
+        <FriendSkeleton rows={5} />
+      ) : nonFriends.length > 0 ? (
         nonFriends.map((user) => (
-          // <FriendCard key={user.userId} user={user} variant="user" />
           <NonFriendCard
             key={user.userId}
             user={user}

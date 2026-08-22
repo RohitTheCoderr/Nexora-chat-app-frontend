@@ -10,8 +10,8 @@ import ProfileSkeleton from "./components/profile-skeleton.tsx";
 function Profile() {
   const [editing, setEditing] = useState(false);
 
-  const {setUserData} = useAuth();
-  
+  const { setUserData } = useAuth();
+
   const { data: profile, isLoading } = useQuery({
     queryKey: ["user-profile-data"],
     queryFn: async () => {
@@ -29,7 +29,7 @@ function Profile() {
 
   return (
     <AppLayout title="Profile" subtitle="How you appear across Nexora">
-  {!isLoading ? (
+      {isLoading ? (
         <ProfileSkeleton />
       ) : (
         profileData && (
@@ -41,10 +41,7 @@ function Profile() {
             />
 
             {editing && (
-              <ProfileForm
-                profile={profileData}
-                setEditing={setEditing}
-              />
+              <ProfileForm profile={profileData} setEditing={setEditing} />
             )}
           </>
         )

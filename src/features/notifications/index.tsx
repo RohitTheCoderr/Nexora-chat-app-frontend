@@ -2,7 +2,7 @@ import { AppLayout } from "@/components/common/app-layout.tsx";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import NotificationRow from "./components/notification-card-row.tsx";
 import { EmptyState } from "@/components/common/empty-friend-card.tsx";
-import { NotificationSkeleton } from "@/components/common/messageSkeleton.tsx";
+import { NotificationSkeleton } from "@/components/common/notification-skeleton.tsx";
 import { readNotificationApi } from "./apis/read-notification/index.ts";
 import { BellOff } from "lucide-react";
 import NotificationDialog from "./components/notification-dialog.tsx";

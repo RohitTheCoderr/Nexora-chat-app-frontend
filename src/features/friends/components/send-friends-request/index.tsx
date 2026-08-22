@@ -7,6 +7,7 @@ import { SendFriendCard } from "./components/send-friend-card.tsx";
 import { cancelRequestApi } from "../../apis/cancel-request/index.ts";
 import { toast } from "sonner";
 import { useState } from "react";
+import { FriendSkeleton } from "@/components/common/friend-skeleton.tsx";
 
 function SendedFriendsRequest() {
   const queryClient = useQueryClient();
@@ -42,17 +43,15 @@ function SendedFriendsRequest() {
     },
   });
 
-  if (isPending) {
-    return <Loader />;
-  }
-
   if (error) {
     return <div>Something went wrong.</div>;
   }
 
   return (
     <div className="grid grid-cols-1 gap-3">
-      {requestFriends.length > 0 ? (
+      {isPending ? (
+        <FriendSkeleton rows={3} />
+      ) : requestFriends.length > 0 ? (
         requestFriends.map((user) => (
           <SendFriendCard
             key={user.userId}
@@ -66,7 +65,7 @@ function SendedFriendsRequest() {
       ) : (
         <EmptyState
           icon={User}
-          title="No Request Friend found"
+          title="No send friend request found"
           description="Search for people and send your friend request."
         />
       )}
