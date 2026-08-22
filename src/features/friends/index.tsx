@@ -5,7 +5,7 @@ import { AppLayout } from "@/components/common/app-layout.tsx";
 export default function Friends() {
   return (
     <AppLayout title="Friends" subtitle="Explore friends">
-      <div className="mx-auto w-full max-w-4xl px-4">
+      <div className="mx-auto max-w-3xl space-y-6">
         {/* Tabs */}
         <div className="my-6 overflow-x-auto">
           <div className="inline-flex min-w-full rounded-full bg-muted p-1 sm:min-w-0">
@@ -13,7 +13,7 @@ export default function Friends() {
               to="all"
               className={({ isActive }) =>
                 cn(
-                  "shrink-0 rounded-full px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors",
+                  "shrink-0 rounded-full px-3 flex items-center sm:px-4 py-1.5 sm:py-2 text-[11px] sm:text-sm font-medium whitespace-nowrap transition-colors",
                   isActive
                     ? "bg-background shadow-sm"
                     : "text-muted-foreground hover:text-foreground",
@@ -27,7 +27,7 @@ export default function Friends() {
               to="non-friends"
               className={({ isActive }) =>
                 cn(
-                  "shrink-0 rounded-full px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors",
+                 "shrink-0 rounded-full px-3 flex items-center sm:px-4 py-1.5 sm:py-2 text-[11px] sm:text-sm font-medium whitespace-nowrap transition-colors",
                   isActive
                     ? "bg-background shadow-sm"
                     : "text-muted-foreground hover:text-foreground",
@@ -41,7 +41,7 @@ export default function Friends() {
               to="requests"
               className={({ isActive }) =>
                 cn(
-                  "shrink-0 rounded-full px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors",
+                 "shrink-0 rounded-full px-3 flex items-center sm:px-4 py-1.5 sm:py-2 text-[11px] sm:text-sm font-medium whitespace-nowrap transition-colors",
                   isActive
                     ? "bg-background shadow-sm"
                     : "text-muted-foreground hover:text-foreground",
@@ -55,7 +55,7 @@ export default function Friends() {
               to="sended/requests"
               className={({ isActive }) =>
                 cn(
-                  "shrink-0 rounded-full px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors",
+                  "shrink-0 rounded-full px-3 flex items-center sm:px-4 py-1.5 sm:py-2 text-[11px] sm:text-sm font-medium whitespace-nowrap transition-colors",
                   isActive
                     ? "bg-background shadow-sm"
                     : "text-muted-foreground hover:text-foreground",

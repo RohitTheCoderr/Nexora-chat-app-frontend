@@ -29,6 +29,9 @@ function Profile() {
 
   return (
     <AppLayout title="Profile" subtitle="How you appear across Nexora">
+      
+      <div className="mx-auto max-w-3xl space-y-6">
+
       {isLoading ? (
         <ProfileSkeleton />
       ) : (
@@ -46,6 +49,9 @@ function Profile() {
           </>
         )
       )}
+
+      </div>
+
     </AppLayout>
   );
 }

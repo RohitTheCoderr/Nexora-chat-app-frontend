@@ -85,7 +85,6 @@ function ProfileCard({ profile, editing, handleEdit }: profileProps) {
   
   const presence = status ?? "offline";
   return (
-    <div>
       <div className="mx-auto max-w-3xl space-y-6">
         <div className="overflow-hidden rounded-3xl border border-border bg-surface shadow-soft">
           {/* <div className="bg-canvas-glow h-28" /> */}
@@ -167,7 +166,6 @@ function ProfileCard({ profile, editing, handleEdit }: profileProps) {
           ))}
         </div>
       </div>
-    </div>
   );
 }
 
