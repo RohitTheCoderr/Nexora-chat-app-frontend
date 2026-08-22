@@ -87,9 +87,9 @@ function ProfileCard({ profile, editing, handleEdit }: profileProps) {
   return (
       <div className="mx-auto max-w-3xl space-y-6">
         <div className="overflow-hidden rounded-3xl border border-border bg-surface shadow-soft">
-          {/* <div className="bg-canvas-glow h-28" /> */}
+          
        <div
-  className="w-full h-28 md:h-40 bg-cover bg-center bg-no-repeat"
+  className="w-full h-28 md:h-40 bg-cover  bg-center bg-no-repeat"
   style={{
     backgroundImage: `url(${profileBanner2})`,
   }}
@@ -100,7 +100,7 @@ function ProfileCard({ profile, editing, handleEdit }: profileProps) {
                 <UserAvatar
                   user={currentUser}
                   size="xl"
-                  className="ring-4 ring-surface"
+                  className="ring-4 ring-surface rounded-2xl"
                   showPresence={presence}
                 />
                 <button
