@@ -1,6 +1,7 @@
 import { UserAvatar } from "@/components/common/user-avatar.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { createProfileApi } from "../apis/create-profile/index.ts";
+import profileBanner2 from "@/assets/profile-banner2.png";
 import {
   Camera,
   Clock,
@@ -87,7 +88,13 @@ function ProfileCard({ profile, editing, handleEdit }: profileProps) {
     <div>
       <div className="mx-auto max-w-3xl space-y-6">
         <div className="overflow-hidden rounded-3xl border border-border bg-surface shadow-soft">
-          <div className="bg-canvas-glow h-28" />
+          {/* <div className="bg-canvas-glow h-28" /> */}
+       <div
+  className="w-full h-28 md:h-40 bg-cover bg-center bg-no-repeat"
+  style={{
+    backgroundImage: `url(${profileBanner2})`,
+  }}
+/>
           <div className="flex flex-wrap items-end gap-5 px-6 pb-6">
             <div className="-mt-12 shrink-0">
               <div className="relative">
@@ -118,7 +125,7 @@ function ProfileCard({ profile, editing, handleEdit }: profileProps) {
                 />
               </div>
             </div>
-            <div className="min-w-0 flex-1 pt-2">
+            <div className="min-w-[7rem] flex-1 pt-2">
               <h2 className="truncate text-xl font-bold">{profile.name}</h2>
               <p className="text-sm text-muted-foreground">
                 {profile.username}

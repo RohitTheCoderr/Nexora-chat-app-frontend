@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getProfileApi } from "./apis/get-profile/index.ts";
 import { useState } from "react";
 import { useAuth } from "../sign-in/store/authStore.ts";
+import ProfileSkeleton from "./components/profile-skeleton.tsx";
 
 function Profile() {
   const [editing, setEditing] = useState(false);
@@ -24,32 +25,30 @@ function Profile() {
     },
   });
 
-  // update prfile api call
-
   const profileData = profile?.data;
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <AppLayout title="Profile" subtitle="How you appear across Nexora">
-{profileData && (
-  <>
-    <ProfileCard
-      profile={profileData}
-      editing={editing}
-      handleEdit={() => setEditing((prev) => !prev)}
-    />
+  {!isLoading ? (
+        <ProfileSkeleton />
+      ) : (
+        profileData && (
+          <>
+            <ProfileCard
+              profile={profileData}
+              editing={editing}
+              handleEdit={() => setEditing((prev) => !prev)}
+            />
 
-    {editing && (
-      <ProfileForm
-        profile={profileData}
-        setEditing={setEditing}
-      />
-    )}
-  </>
-)}
+            {editing && (
+              <ProfileForm
+                profile={profileData}
+                setEditing={setEditing}
+              />
+            )}
+          </>
+        )
+      )}
     </AppLayout>
   );
 }

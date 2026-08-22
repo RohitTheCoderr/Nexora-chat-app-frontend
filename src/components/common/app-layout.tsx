@@ -228,7 +228,7 @@ export function AppLayout({
           <main
             className={cn(
               "nx-scroll min-w-0 flex-1 overflow-y-auto pb-16 md:pb-0",
-              padded && "px-4 py-6 md:px-8 md:py-8",
+              padded && "px-4 py-6 md:px-8 md:py-8 max-md:pb-20",
             )}
           >
             {children}
@@ -246,7 +246,7 @@ export function AppLayout({
                 to={item.to}
                 className={cn(
                   "relative flex flex-1 flex-col items-center justify-center gap-1 text-[11px] font-medium transition-colors",
-                  active ? "text-primary" : "text-muted-foreground",
+                  active ? "text-primary " : "text-muted-foreground",
                 )}
               >
                 <item.icon className="h-5 w-5" />
