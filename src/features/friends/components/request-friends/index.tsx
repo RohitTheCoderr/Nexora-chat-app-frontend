@@ -1,7 +1,6 @@
 import { EmptyState } from "@/components/common/empty-friend-card.tsx";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { User } from "lucide-react";
-import Loader from "@/components/common/loader.tsx";
 import { RequestFriendsListApi } from "./api/index.ts";
 import { FriendRequestCard } from "./components/friend-request-card.tsx";
 import { acceptRequestApi } from "../../apis/accept-request/index.ts";
