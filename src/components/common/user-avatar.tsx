@@ -72,10 +72,9 @@ export function UserAvatar({
     <span className={cn("relative inline-block shrink-0", className)}>
       <span
         className={cn(
-          "grid place-items-center overflow-hidden rounded-2xl font-semibold text-primary-foreground",
+          "grid place-items-center overflow-hidden bg-amber-600 rounded-2xl font-semibold text-primary-foreground",
           sizes[size],
         )}
-        // style={{ backgroundColor: "oklch(0.585 0.093 178)" }}
         aria-hidden
       >
         {user?.avatar?.url ? (
