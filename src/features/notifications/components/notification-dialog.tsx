@@ -10,12 +10,7 @@ import { Button } from "@/components/ui/button";
 import type { Notification } from "../apis/notification/type.ts";
 import { UserAvatar } from "@/components/common/user-avatar.tsx";
 
-import {
-  MessageSquare,
-  UserPlus,
-  Users,
-  type LucideIcon,
-} from "lucide-react";
+import { MessageSquare, UserPlus, Users, type LucideIcon } from "lucide-react";
 
 const typeIcon: Record<NotificationMessageType, LucideIcon> = {
   FRIEND_REQUEST: UserPlus,
@@ -55,8 +50,6 @@ function NotificationDialog({
 
   const user = notification.sender;
 
-  const presence = notification.sender?.status ?? "offline";
-
   const formattedTime = new Date(notification.receivingDate).toLocaleString();
 
   const title = notification.messageType
@@ -86,7 +79,7 @@ function NotificationDialog({
           {/* Sender */}
           {user && (
             <div className="flex items-center gap-3">
-              <UserAvatar user={user} size="md" showPresence={presence} />
+              <UserAvatar user={user} size="md" showPresence={false} />
 
               <div className="min-w-0">
                 <p className="font-medium">{user.name}</p>

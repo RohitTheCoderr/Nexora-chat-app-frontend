@@ -1,6 +1,5 @@
 import { UserAvatar } from "@/components/common/user-avatar.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { cn } from "@/lib/utils.ts";
 import type { friendRequestStatus } from "../../non-friends/api/type.ts";
 
 type User = {

@@ -29,29 +29,25 @@ function Profile() {
 
   return (
     <AppLayout title="Profile" subtitle="How you appear across Nexora">
-      
       <div className="mx-auto max-w-3xl space-y-6">
+        {isLoading ? (
+          <ProfileSkeleton />
+        ) : (
+          profileData && (
+            <>
+              <ProfileCard
+                profile={profileData}
+                editing={editing}
+                handleEdit={() => setEditing((prev) => !prev)}
+              />
 
-      {isLoading ? (
-        <ProfileSkeleton />
-      ) : (
-        profileData && (
-          <>
-            <ProfileCard
-              profile={profileData}
-              editing={editing}
-              handleEdit={() => setEditing((prev) => !prev)}
-            />
-
-            {editing && (
-              <ProfileForm profile={profileData} setEditing={setEditing} />
-            )}
-          </>
-        )
-      )}
-
+              {editing && (
+                <ProfileForm profile={profileData} setEditing={setEditing} />
+              )}
+            </>
+          )
+        )}
       </div>
-
     </AppLayout>
   );
 }

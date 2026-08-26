@@ -1,6 +1,3 @@
-
-
-
 export type LoginReq = {
   username?: string;
   email?: string;
@@ -24,9 +21,8 @@ export type UserData = {
   BlockedUsersCount?: number;
   lastSeen?: string;
 
-  _id: string
+  _id?: string;
 };
-
 
 export type LoginRes = {
   userData: UserData;
