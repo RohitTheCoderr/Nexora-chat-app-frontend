@@ -186,7 +186,9 @@ function ChatPage() {
         },
       );
       // Ensure any other listeners/refetches see the update
-      queryClient.invalidateQueries(["conversations"]);
+      queryClient.invalidateQueries({
+        queryKey: ["conversations"],
+      });
     },
 
     onError: (error) => {
@@ -376,7 +378,9 @@ function ChatPage() {
       );
 
       // Also invalidate to ensure UI updates in all places
-      queryClient.invalidateQueries(["conversations"]);
+      queryClient.invalidateQueries({
+        queryKey: ["conversations"],
+      });
 
       // ========================================================
       // MARK AS READ
