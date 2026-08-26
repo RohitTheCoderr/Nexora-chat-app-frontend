@@ -60,14 +60,15 @@ export function PresenceDot({
 export function UserAvatar({
   user,
   size = "md",
-  showPresence = "offline",
+  showPresence = false,
   className,
 }: {
   user: User;
   size?: keyof typeof sizes;
-  showPresence?: Presence;
+  showPresence?: boolean;
   className?: string;
 }) {
+  const status = user.status === "online" ? "online" : "offline";
   return (
     <span className={cn("relative inline-block shrink-0", className)}>
       <span
@@ -89,7 +90,7 @@ export function UserAvatar({
       </span>
       {showPresence ? (
         <PresenceDot
-          presence={showPresence}
+          presence={status}
           className={cn(
             "absolute -right-0.5 -bottom-0.5 block",
             dotSizes[size],

@@ -1,5 +1,20 @@
 import { useAuthStore } from "@/features/sign-in/store/authStore.ts";
 import axios, { AxiosError, type InternalAxiosRequestConfig } from "axios";
+import { toast } from "sonner";
+
+const NETWORK_TOAST_ID = "network-error";
+
+const showNetworkError = () => {
+  toast.error(
+    navigator.onLine
+      ? "The server is unavailable. Please try again shortly."
+      : "You are offline. Check your internet connection and try again.",
+    {
+      id: NETWORK_TOAST_ID,
+      duration: 5000,
+    },
+  );
+};
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
@@ -30,6 +45,9 @@ api.interceptors.response.use(
     return response;
   },
   (error: AxiosError) => {
+    if (!error.response && error.request) {
+      showNetworkError();
+    }
     if (error.response) {
       const status = error.response.status;
 
@@ -54,7 +72,7 @@ api.interceptors.response.use(
         console.log("Server error");
       }
     } else if (error.request) {
-      console.log("Server is not responding");
+      console.error("Network request failed", error.message);
     } else {
       console.log("Request error:", error.message);
     }
@@ -62,5 +80,16 @@ api.interceptors.response.use(
     return Promise.reject(error);
   },
 );
+
+window.addEventListener("offline", () => {
+  showNetworkError();
+});
+
+window.addEventListener("online", () => {
+  toast.success("Connection restored", {
+    id: NETWORK_TOAST_ID,
+    duration: 2500,
+  });
+});
 
 export default api;

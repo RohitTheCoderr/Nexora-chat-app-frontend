@@ -33,12 +33,14 @@ export function AppLayout({
   subtitle,
   actions,
   padded = true,
+  mobileChat = false,
 }: {
   children: React.ReactNode;
   title?: string;
   subtitle?: string;
   actions?: React.ReactNode;
   padded?: boolean;
+  mobileChat?: boolean;
 }) {
   const [collapsed, setCollapsed] = useState(false);
   const { pathname } = useLocation();
@@ -58,8 +60,6 @@ export function AppLayout({
     avatar: userData?.avatar,
     status: userData?.status,
   };
-
-  const presence = userData?.status  ?? "offline";
 
   const nav: {
     to: string;
@@ -159,11 +159,7 @@ export function AppLayout({
             >
               <Link to="/profile" className="shrink-0">
                 {userData ? (
-                  <UserAvatar
-                    user={avatarUser}
-                    size="sm"
-                    showPresence={presence}
-                  />
+                  <UserAvatar user={avatarUser} size="sm" showPresence={true} />
                 ) : (
                   <User2 size={18} />
                 )}{" "}
@@ -195,7 +191,12 @@ export function AppLayout({
         </aside>
 
         <div className="flex min-w-0 flex-1 flex-col">
-          <header className="flex h-16 shrink-0 items-center gap-3 border-b border-border bg-surface/80 px-4 backdrop-blur md:px-6">
+          <header
+            className={cn(
+              "flex h-16 shrink-0 items-center gap-3 border-b border-border bg-surface/80 px-4 backdrop-blur md:px-6",
+              mobileChat && "max-md:hidden",
+            )}
+          >
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-3 md:hidden">
                 <NexoraLogo size="sm" />
@@ -212,14 +213,6 @@ export function AppLayout({
               </div>
             </div>
 
-            {/* <div className="relative hidden w-64 lg:block">
-              <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                placeholder="Search Nexora"
-                className="h-10 rounded-xl border-border bg-muted/60 pl-9"
-              />
-            </div> */}
-
             {actions}
             <ThemeToggle className="cursor-pointer" />
             <LogoutButton />
@@ -228,6 +221,7 @@ export function AppLayout({
           <main
             className={cn(
               "nx-scroll min-w-0 flex-1 overflow-y-auto pb-16 md:pb-0",
+              mobileChat && "max-md:pb-0",
               padded && "px-4 py-6 md:px-8 md:py-8 max-md:pb-20",
             )}
           >
@@ -235,7 +229,12 @@ export function AppLayout({
           </main>
         </div>
 
-        <nav className="fixed inset-x-0 bottom-0 z-30 flex h-16 items-stretch border-t border-border bg-surface md:hidden">
+        <nav
+          className={cn(
+            "fixed inset-x-0 bottom-0 z-30 flex h-16 items-stretch border-t border-border bg-surface md:hidden",
+            mobileChat && "hidden",
+          )}
+        >
           {nav.map((item) => {
             // const active = pathname === item.to;
             const active =

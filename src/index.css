@@ -102,7 +102,7 @@
   --warning-foreground: oklch(0.26 0.04 72);
   --online: oklch(0.7 0.16 152);
 
-  --bubble-in: oklch(0.968 0.006 106);
+  --bubble-in: oklch(92.797% 0.00011 271.152);
   --bubble-in-foreground: oklch(0.26 0.017 190);
   --bubble-out: oklch(0.585 0.093 178);
   --bubble-out-foreground: oklch(0.99 0.005 175);
@@ -180,9 +180,9 @@
   --online: oklch(0.76 0.16 152);
 
   --bubble-in: oklch(0.295 0.014 210);
-  --bubble-in-foreground: oklch(0.95 0.006 190);
+  --bubble-in-foreground: oklch(92.797% 0.00011 271.152);
   --bubble-out: oklch(0.5 0.086 176);
-  --bubble-out-foreground: oklch(0.985 0.005 175);
+  --bubble-out-foreground: oklch(92.797% 0.00011 271.152);
 
   --border: oklch(1 0 0 / 10%);
   --border-strong: oklch(1 0 0 / 18%);

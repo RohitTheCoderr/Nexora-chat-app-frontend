@@ -46,12 +46,10 @@ export function NonFriendCard({
     status: user.status,
   };
 
-  const presence = avatarUser.status ?? "offline";
-
   return (
     <div className="flex flex-wrap items-center gap-4 rounded-2xl border border-border bg-surface p-2 sm:p-4 shadow-soft transition-shadow hover:shadow-raised">
       {/* Avatar */}
-      <UserAvatar user={avatarUser} size="md" showPresence={presence} />
+      <UserAvatar user={avatarUser} size="md" showPresence={false} />
 
       {/* User info */}
       <div className="min-w-0 flex-1">
@@ -60,19 +58,6 @@ export function NonFriendCard({
         <p className="truncate text-xs text-muted-foreground">
           @{user.username}
         </p>
-
-        {user.status && (
-          <p
-            className={cn(
-              "mt-1 text-xs font-medium",
-              user.status === "online"
-                ? "text-success"
-                : "text-muted-foreground",
-            )}
-          >
-            {user.status === "online" ? "Online" : (user.lastSeen ?? "Offline")}
-          </p>
-        )}
       </div>
 
       {/* Actions */}
