@@ -1,8 +1,14 @@
 import api from "@/shared/utils/axios";
-import type { ChatMessageRes } from "../messages/types";
+import type { ChatMessage } from "../messages/types";
 
-export const sendMessage = (conversationId: string, text: string) =>
-    api.post<ApiResponse<ChatMessageRes>>("/message/send", {
-        conversationId,
-        text,
-    });
+export const sendMessage = async (
+  conversationId: string,
+  text: string,
+): Promise<ApiResponse<ChatMessage>> => {
+  const response = await api.post<ApiResponse<ChatMessage>>("/message/send", {
+    conversationId,
+    text,
+  });
+
+  return response.data;
+};

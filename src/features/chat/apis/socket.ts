@@ -1,5 +1,6 @@
 import { io, type Socket } from "socket.io-client";
-import type { ChatMessage } from "./type.ts";
+import type { ChatMessage } from "./messages/types.ts";
+// import type { ChatMessage } from "./type.ts";
 
 const getSocketOrigin = () => {
   const apiUrl = import.meta.env.VITE_API_BASE_URL as string | undefined;
@@ -22,7 +23,9 @@ export const sendSocketMessage = (
   text: string,
 ) => socket.emit("send_message", { conversationId, text });
 
-export const markSocketMessagesRead = (socket: Socket, conversationId: string) =>
-  socket.emit("mark_as_read", conversationId);
+export const markSocketMessagesRead = (
+  socket: Socket,
+  conversationId: string,
+) => socket.emit("mark_as_read", conversationId);
 
 export type ReceiveMessageHandler = (message: ChatMessage) => void;

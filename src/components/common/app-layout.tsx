@@ -25,6 +25,7 @@ import { useAuth } from "@/features/sign-in/store/authStore.ts";
 import { LogoutButton } from "./logout-pop-up.tsx";
 import { useQuery } from "@tanstack/react-query";
 import { getUnreadNotificationCount } from "@/shared/global-apis/unread-notification-count.ts";
+import { getConversations } from "@/features/chat/apis/conversations/index.ts";
 import { Badge } from "../ui/badge.tsx";
 
 export function AppLayout({
@@ -53,6 +54,17 @@ export function AppLayout({
 
   const unreadCount = unreadNotificationData?.data?.count ?? 0;
 
+  const { data: conversationsData } = useQuery({
+    queryKey: ["conversations"],
+    queryFn: getConversations,
+  });
+
+  const totalUnread =
+    conversationsData?.data?.Conversations?.reduce(
+      (sum, c) => sum + (c.unreadCount ?? 0),
+      0,
+    ) ?? 0;
+
   const avatarUser = {
     userId: userData?.userId,
     name: userData?.name ?? "",
@@ -67,7 +79,7 @@ export function AppLayout({
     icon: typeof Users;
     badge?: number;
   }[] = [
-    { to: "/", label: "Chats", icon: MessageSquare, badge: 3 },
+    { to: "/", label: "Chats", icon: MessageSquare, badge: totalUnread },
     {
       to: "/notifications",
       label: "Notifications",

@@ -14,8 +14,11 @@ import { UserAvatar } from "@/components/common/user-avatar.tsx";
 import type { ChatMessage } from "../apis/messages/types";
 import type { UserData } from "@/features/sign-in/api/type";
 
-const getId = (user: UserData | string) =>
-  typeof user === "string" ? user : (user.userId ?? "");
+const getId = (user?: string | { userId?: string; _id?: string } | null) => {
+  if (!user) return "";
+
+  return typeof user === "string" ? user : (user.userId ?? user._id ?? "");
+};
 const formatTime = (value?: string | null) =>
   value
     ? new Intl.DateTimeFormat(undefined, {
@@ -52,6 +55,12 @@ export function ChatWindow({
   const navigate = useNavigate();
   const [text, setText] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const sortedMessages = (messages ?? [])
+    .slice()
+    .sort(
+      (a, b) =>
+        new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+    );
   const avatarUser = {
     ...friend,
     userId: getId(friend),
@@ -61,7 +70,6 @@ export function ChatWindow({
   };
   const handleSend = () => {
     const message = text.trim();
-    console.log("messgae send", message);
 
     if (message && !isSending) {
       onSend(message);
@@ -71,7 +79,7 @@ export function ChatWindow({
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages.length]);
+  }, [sortedMessages.length]);
 
   return (
     <section className="flex min-w-0 flex-1 flex-col">
@@ -121,7 +129,7 @@ export function ChatWindow({
               </p>
             </div>
           ) : null}
-          {messages.map((message) => {
+          {sortedMessages.map((message) => {
             const mine = getId(message.sender) === currentUserId;
             return (
               <div
