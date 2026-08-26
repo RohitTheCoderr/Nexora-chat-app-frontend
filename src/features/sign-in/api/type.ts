@@ -8,13 +8,13 @@ export type LoginReq = {
 };
 
 export type UserData = {
-  userId: string;
+  userId?: string;
   name: string;
   username: string;
   role: UserRole;
   avatar: avatar;
   status: UserStatus;
-  
+
   email?: string;
   phone?: string;
   bio?: string;
@@ -23,6 +23,8 @@ export type UserData = {
   FriendsCount?: number;
   BlockedUsersCount?: number;
   lastSeen?: string;
+
+  _id: string
 };
 
 

@@ -80,6 +80,11 @@ const router = createBrowserRouter([
         handle: { title: "Welcome to Nexora chat app" },
       },
       {
+        path: "chats/:conversationId",
+        element: <ChatPage />,
+        handle: { title: "Chat | Nexora" },
+      },
+      {
         path: ROUTES.NOTIFICATIONS,
         element: <Notifications />,
         handle: { title: "Notifications | Nexora" },
