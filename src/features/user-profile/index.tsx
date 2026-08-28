@@ -11,8 +11,6 @@ export default function UserProfilePage() {
   const navigate = useNavigate();
   const { userId } = useParams();
 
-  console.log("userId", userId);
-
   const { data, isLoading, isError } = useQuery({
     queryKey: ["Friend-profile", userId],
     queryFn: () => getUserProfileApi(userId!),
@@ -95,7 +93,7 @@ export default function UserProfilePage() {
             {/* Message */}
             <Button
               className="mt-6 w-full"
-              onClick={() => navigate(`/chat/${user.userId}`)}
+              onClick={() => navigate(`/chats/${user.userId}`)}
             >
               <MessageCircle className="mr-2 h-4 w-4" />
               Message
