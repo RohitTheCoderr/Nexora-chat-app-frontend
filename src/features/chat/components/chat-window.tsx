@@ -5,6 +5,8 @@ import {
   MessageCircle,
   MoreHorizontal,
   Send,
+  User2,
+  X,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -55,6 +57,7 @@ export function ChatWindow({
   const navigate = useNavigate();
   const [text, setText] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [isAvatarOpen, setIsAvatarOpen] = useState(false);
   const sortedMessages = (messages ?? [])
     .slice()
     .sort(
@@ -93,17 +96,34 @@ export function ChatWindow({
         >
           <ArrowLeft className="h-4 w-4" />
         </Button>
-        <UserAvatar user={avatarUser} size="sm" showPresence={true} />
+        {/* <UserAvatar user={avatarUser} size="sm" showPresence={true} /> */}
+        <button
+          type="button"
+          onClick={() => setIsAvatarOpen(true)}
+          className="shrink-0 cursor-pointer rounded-full transition-transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+          aria-label={`View ${friend.name}'s profile photo`}
+        >
+          <UserAvatar user={avatarUser} size="sm" showPresence={true} />
+        </button>
         <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-semibold">
-            {friend.name}{" "}
-            <span className="text-primary">{`(@${friend.username ?? ""})`}</span>
-          </p>
-          <p className="text-xs text-muted-foreground">
-            {friend.status === "online"
-              ? "Online"
-              : `@${friend.username ?? "user"}`}
-          </p>
+          <button
+            type="button"
+            onClick={() => navigate(`/user/profile/${friend._id}`)}
+            className="min-w-0 text-left"
+          >
+            <p className="truncate text-sm font-semibold">
+              {friend.name}{" "}
+              <span className="text-primary">
+                {`(@${friend.username ?? ""})`}
+              </span>
+            </p>
+
+            <p className="text-xs text-muted-foreground">
+              {friend.status === "online"
+                ? "Online"
+                : `@${friend.username ?? "user"}`}
+            </p>
+          </button>
         </div>
         <Button
           variant="ghost"
@@ -197,6 +217,44 @@ export function ChatWindow({
           </Button>
         </div>
       </div>
+
+      {isAvatarOpen ? (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
+          onClick={() => setIsAvatarOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${friend.name}'s profile photo`}
+        >
+          {/* Close button */}
+          <button
+            type="button"
+            onClick={() => setIsAvatarOpen(false)}
+            className="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white transition-colors hover:bg-black/70"
+            aria-label="Close profile photo"
+          >
+            <X className="h-6 w-6" />
+          </button>
+
+          {/* Image container */}
+          <div
+            className="relative max-h-[85vh] max-w-[90vw] animate-in zoom-in-95 overflow-hidden rounded-2xl shadow-2xl duration-200"
+            onClick={(event) => event.stopPropagation()}
+          >
+            {friend.avatar?.url ? (
+              <img
+                src={friend.avatar.url}
+                alt={`${friend.name}'s profile`}
+                className="max-h-[85vh] max-w-[90vw] object-contain"
+              />
+            ) : (
+              <div className="flex h-64 w-64 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <User2 className="h-28 w-28" strokeWidth={1.5} />
+              </div>
+            )}
+          </div>
+        </div>
+      ) : null}
     </section>
   );
 }

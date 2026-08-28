@@ -8,16 +8,32 @@ import DocumentTitle, {
   type RouteHandle,
 } from "@/components/common/document-title.tsx";
 import UserRoute from "./userRoutes.tsx";
-import ResetPassword from "@/features/reset-password/index.tsx";
-import Friends from "@/features/friends/index.tsx";
-import NonFriends from "@/features/friends/components/non-friends/index.tsx";
-import AllFriends from "@/features/friends/components/friends/index.tsx";
+// import ResetPassword from "@/features/reset-password/index.tsx";
+// import Friends from "@/features/friends/index.tsx";
+// import NonFriends from "@/features/friends/components/non-friends/index.tsx";
+// import AllFriends from "@/features/friends/components/friends/index.tsx";
+// import { NotFound } from "@/components/common/not-found.tsx";
+// import RequestFriends from "@/features/friends/components/request-friends/index.tsx";
+// import SendedFriendsRequest from "@/features/friends/components/send-friends-request/index.tsx";
+// import Profile from "@/features/profile/index.tsx";
+// import Settings from "@/features/settings/index.tsx";
+// import UserProfilePage from "@/features/user-profile/index.tsx";
+
+const ResetPassword = lazy(() => import("@/features/reset-password/index.tsx"));
+const Friends = lazy(() => import("@/features/friends/index.tsx"));
+const NonFriends = lazy(
+  () => import("@/features/friends/components/non-friends/index.tsx"),
+);
+const AllFriends = lazy(
+  () => import("@/features/friends/components/friends/index.tsx"),
+);
+
 import { NotFound } from "@/components/common/not-found.tsx";
 import RequestFriends from "@/features/friends/components/request-friends/index.tsx";
 import SendedFriendsRequest from "@/features/friends/components/send-friends-request/index.tsx";
 import Profile from "@/features/profile/index.tsx";
 import Settings from "@/features/settings/index.tsx";
-
+import UserProfilePage from "@/features/user-profile/index.tsx";
 const ChatPage = lazy(() => import("@/features/chat/index.tsx"));
 const Login = lazy(() => import("@/features/sign-in/index.tsx"));
 const ForgetPassword = lazy(
@@ -56,9 +72,9 @@ const router = createBrowserRouter([
     handle: { title: "Reset password | Nexora" } satisfies RouteHandle,
   },
 
-   {
+  {
     path: ROUTES.CHANGE_PASSWORD,
-    element: <ResetPassword/>,
+    element: <ResetPassword />,
     handle: { title: "Change password | Nexora" } satisfies RouteHandle,
   },
 
@@ -130,6 +146,11 @@ const router = createBrowserRouter([
       {
         path: ROUTES.PROFILE,
         element: <Profile />,
+        handle: { title: "Your profile | Nexora" },
+      },
+      {
+        path: ROUTES.USER_PROFILE,
+        element: <UserProfilePage />,
         handle: { title: "Your profile | Nexora" },
       },
       {

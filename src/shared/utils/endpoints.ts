@@ -27,8 +27,8 @@ export const ENDPOINT = {
   CREATE_PROFILE: "/users/create-profile", //post
   UPDATE_PROFILE: "/users/update-profile", // PUT
   DELETE_AVATAR: "/users/delete-avatar", // DELETE
-
+  GET_FRIEND_PROFILE: "/users/friend", // GET_FRIEND_PROFILE
 
   // session device
-  SESSION:"/sessions"
+  SESSION: "/sessions",
 };

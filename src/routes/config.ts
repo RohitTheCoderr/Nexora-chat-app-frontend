@@ -11,5 +11,6 @@ export const ROUTES = {
   SENDED_FRIENDS_REQUEST: "/friends/sended/requests",
   NOTIFICATIONS: "/notifications",
   PROFILE: "/profile",
+  USER_PROFILE: "/user/profile/:userId",
   SETTINGS: "/settings",
 };
