@@ -93,7 +93,7 @@ export function AppLayout({
 
   return (
     <TooltipProvider>
-      <div className="flex h-screen w-full overflow-hidden bg-background">
+      <div className="flex h-dvh w-full overflow-hidden bg-background">
         <aside
           className={cn(
             "hidden shrink-0 flex-col border-r border-sidebar-border bg-sidebar transition-[width] duration-200 md:flex",
@@ -202,7 +202,7 @@ export function AppLayout({
           </div>
         </aside>
 
-        <div className="flex min-w-0 flex-1 flex-col">
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col">
           <header
             className={cn(
               "flex h-16 shrink-0 items-center gap-3 border-b border-border bg-surface/80 px-4 backdrop-blur md:px-6",
@@ -233,7 +233,7 @@ export function AppLayout({
           <main
             className={cn(
               "nx-scroll min-w-0 flex-1 overflow-y-auto pb-16 md:pb-0",
-              mobileChat && "max-md:pb-0",
+              mobileChat && "max-md:overflow-hidden max-md:pb-0",
               padded && "px-4 py-6 md:px-8 md:py-8 max-md:pb-20",
             )}
           >

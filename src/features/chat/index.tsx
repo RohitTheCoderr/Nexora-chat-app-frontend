@@ -638,7 +638,7 @@ function ChatPage() {
       padded={false}
       mobileChat={Boolean(activeConversation)}
     >
-      <div className="flex h-[calc(100vh)] min-h-130 bg-canvas-glow md:h-[calc(100vh-4rem)]">
+      <div className="flex h-dvh min-h-0 bg-canvas-glow md:h-[calc(100vh-4rem)]">
         {/* =====================================================
             CONVERSATION LIST
         ===================================================== */}

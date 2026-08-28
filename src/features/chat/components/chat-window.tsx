@@ -82,7 +82,7 @@ export function ChatWindow({
   }, [sortedMessages.length]);
 
   return (
-    <section className="flex min-w-0 flex-1 flex-col">
+    <section className="flex h-full min-h-0 min-w-0 flex-1 flex-col">
       <header className="flex h-18.25 shrink-0 items-center gap-3 border-b border-border bg-surface/80 px-2 backdrop-blur md:px-6">
         <Button
           variant="ghost"
@@ -113,7 +113,7 @@ export function ChatWindow({
           <MoreHorizontal className="h-4 w-4" />
         </Button>
       </header>
-      <div className="nx-scroll flex-1 overflow-y-auto px-4 py-6 md:px-10 ">
+      <div className="nx-scroll  min-h-0 flex-1 overflow-y-auto px-4 py-6 md:px-10 ">
         <div className="mx-auto flex max-w-3xl flex-col gap-3">
           {isLoading ? (
             <p className="py-10 text-center text-sm text-muted-foreground">
@@ -172,7 +172,7 @@ export function ChatWindow({
           <div ref={messagesEndRef} aria-hidden="true" />
         </div>
       </div>
-      <div className="border-t border-border bg-surface/90 p-3 md:p-4">
+      <div className="shrink-0 border-t border-border bg-surface/90 p-3 md:p-4">
         <div className="mx-auto flex max-w-3xl items-end gap-2">
           <Input
             value={text}
