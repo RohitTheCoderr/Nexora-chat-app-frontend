@@ -232,7 +232,7 @@ export function AppLayout({
 
           <main
             className={cn(
-              "nx-scroll min-w-0 flex-1 overflow-y-auto pb-16 md:pb-0",
+              "nx-scroll  min-h-0 min-w-0 flex-1 overflow-y-auto pb-16 md:pb-0",
               mobileChat && "max-md:overflow-hidden max-md:pb-0",
               padded && "px-4 py-6 md:px-8 md:py-8 max-md:pb-20",
             )}

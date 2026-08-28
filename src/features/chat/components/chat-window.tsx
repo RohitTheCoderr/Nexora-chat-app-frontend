@@ -82,8 +82,8 @@ export function ChatWindow({
   }, [sortedMessages.length]);
 
   return (
-    <section className="flex h-full min-h-0 min-w-0 flex-1 flex-col">
-      <header className="sticky top-0 z-20  flex h-18.25 shrink-0 items-center gap-3 border-b border-border bg-surface/80 px-2 backdrop-blur md:px-6">
+    <section className="flex h-full min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
+      <header className="flex h-18.25 shrink-0 items-center gap-3 border-b border-border bg-surface/80 px-2 backdrop-blur md:px-6">
         <Button
           variant="ghost"
           size="icon"
